@@ -1,0 +1,38 @@
+/* Navigation bar */
+
+nav {
+  display: flex;
+  background-color: #ff6600;
+  align-items: center;
+  padding: 23px 20px;
+  border-radius: 3px 3px 0 0;
+}
+
+.navbar-brand {
+  font-weight: 800;
+}
+
+.nav-link {
+  font-size: 0.85rem;
+  margin: 0 3px;
+}
+
+.nav-right {
+  margin-left: auto;
+  text-align: right;
+  font-weight: 580;
+}
+
+.main-nav-links {
+  margin-left: 4px;
+  font-weight: 580;
+
+}
+.main-nav-links a{
+  top: 50%;
+  font-size: 14px;
+  transform: translate(0, -50%);
+  margin-left: 3px;
+  padding-left: 6px;
+  border-left: 2px solid black;
+}
