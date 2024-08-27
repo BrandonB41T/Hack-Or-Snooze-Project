@@ -113,6 +113,5 @@ function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
 
   putStoriesOnPage();
-
   updateNavOnLogin();
 }

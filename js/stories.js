@@ -3,24 +3,13 @@
 // This is the global list of the stories, an instance of StoryList
 let storyList;
 
-
-
-
-
-
-//     MIGHT NEED TO CALL BACK ON THIS ********
-//                   VVVVVV
 /** Get and show stories when site first loads. */
-
 async function getAndShowStoriesOnStart() {
   storyList = await StoryList.getStories();
   $storiesLoadingMsg.remove();
 
   putStoriesOnPage();
 }
-
-
-
 
 
 /**
@@ -31,7 +20,6 @@ async function getAndShowStoriesOnStart() {
  */
 
 function generateStoryMarkup(story) {
-  // console.debug("generateStoryMarkup", story);
   let isFavorite;
   let starStatus = "hidden";
   let checked = " unchecked";
@@ -61,7 +49,7 @@ function generateStoryMarkup(story) {
     `);
 }
 
-// appends new story to main list, and pushes it to user's "ownStories" array
+// appends new story to main list, and pushes it to user's "ownStories" list through addStory method on storyList
 
 async function handleStorySubmit(evt) {
   evt.preventDefault();
@@ -114,6 +102,7 @@ function makeMyStoriesList() {
     $submmittedStoriesList.append(story);
   })
   
+  // add delete button to all stories on "my stories" list
   $("#submitted-stories-list li div").prepend('<i class="fa fa-trash-o delete-btn"></i>');
   if (currentUser.ownStories.length === 0) {
     $submmittedStoriesList.html(`<h5>You have no added stories yet!</h5>`);
@@ -121,8 +110,6 @@ function makeMyStoriesList() {
 }
 
 // function to remove an element from an array
-// ****removeStory method in User class based off of this vvvv ****
-
 function removeEl(elementToRemove, arr) {
   arr.forEach((item, index) => {
       if (item === elementToRemove) {
@@ -132,6 +119,7 @@ function removeEl(elementToRemove, arr) {
   return arr;
 }
 
+// delete a selected story from the DOM and API when delete icon clicked
 async function deleteStory(evt) {
   const li = evt.target.parentElement.parentElement;
   const storyId = li.id;
@@ -146,15 +134,15 @@ async function deleteStory(evt) {
   const lists = [currentUser.ownStories, currentUser.favorites, storyList.stories]
   lists.forEach(list => (removeEl(story, list)));
   li.remove();
-  console.log(story, lists);
   
   // resets list
   makeMyStoriesList();
 }
+
 $submmittedStoriesList.on("click", ".delete-btn", deleteStory);
 
 
-// toggle favorite status of a story by changing its star color through checked class and pushing/removing it from user's favorite's list
+// toggle favorite status of a story by changing its star color through checked class and pushing/removing it from user's favorite's list; removeFavorite and addFavorite are methods from the User class
 function toggleFavorite(evt) {
   const star = evt.target;
   const storyId = star.parentElement.parentElement.id;
@@ -162,7 +150,6 @@ function toggleFavorite(evt) {
   if (star.classList.contains("checked")) {
     star.classList.replace("checked", "unchecked");
     story = currentUser.favorites.find(s => (s.storyId === storyId));
-    // callback on removeFavorite method from User class
     currentUser.removeFavorite(story);
   } else {
     star.classList.replace("unchecked", "checked");

@@ -34,7 +34,7 @@ function navSubmitClick() {
 
 $navSubmit.on("click", navSubmitClick);
 
-
+// creates and shows a list of only the user's favorite stories when "favorites" clicked in navbar
 function navFavoritesClick() {
   makeFavoritesList();
   hidePageComponents();
@@ -43,6 +43,7 @@ function navFavoritesClick() {
 
 $navFavorites.on("click", navFavoritesClick);
 
+// creates and shows a list of only the user's own stories when "my stories" clicked in navbar
 function navMyStoriesClick() {
   makeMyStoriesList();
   hidePageComponents();
@@ -50,9 +51,6 @@ function navMyStoriesClick() {
 }
 
 $navMyStories.on("click", navMyStoriesClick);
-
-
-
 
 
 /** When a user first logins in, update the navbar to reflect that. */
@@ -66,4 +64,3 @@ function updateNavOnLogin() {
   $navLogOut.show();
   $navUserProfile.text(`${currentUser.username}`).show();
 }
-

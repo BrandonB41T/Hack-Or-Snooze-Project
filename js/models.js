@@ -81,10 +81,10 @@ class StoryList {
    */
 
   async addStory(user, {author, title, url}) {
-    // UNIMPLEMENTED: complete this function!
     const token = user.loginToken;
     const response = await axios.post("https://hack-or-snooze-v3.herokuapp.com/stories", {token, story: {author, title, url}});
     const story = new Story(response.data.story);
+    // updates affected lists
     this.stories.unshift(story);
     user.ownStories.unshift(story);
     return story;
@@ -207,12 +207,12 @@ class User {
     }
   }
 
+  // methods for adding and removing a story's favorite status both on the DOM and in the API
   async addFavorite(story) {
     this.favorites.push(story);
     await axios.post(`${BASE_URL}/users/${this.username}/favorites/${story.storyId}`, {token: this.loginToken});
   }
   async removeFavorite(storyToRemove) {
-    // await axios.delete(`${BASE_URL}/users/${this.username}/favorites/${storyToRemove.storyId}`, {token: this.loginToken});
     await axios({
       url: `${BASE_URL}/users/${this.username}/favorites/${storyToRemove.storyId}`,
       method: "DELETE",
